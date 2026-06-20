@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer components {
+    /* Shared site container: constrains header, footer and content to the global site size. */
+    .site-container {
+        @apply mx-auto w-full max-w-site px-wp-sm;
+    }
+
+    /* Header buttons: predefined styles selected per button in the Customizer. */
+    .bc-btn {
+        @apply relative inline-flex items-center justify-center transition-all duration-500 ease-out;
+    }
+
+    .bc-btn > span {
+        @apply relative z-10;
+    }
+
+    /* Premium: structural outline that fills from the left on hover. */
+    .bc-btn--premium {
+        @apply overflow-hidden border border-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-stone-900;
+    }
+
+    .bc-btn--premium::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #1c1917;
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+    }
+
+    .bc-btn--premium:hover {
+        @apply text-white;
+    }
+
+    .bc-btn--premium:hover::before {
+        transform: translateX(0);
+    }
+
+    /* Solid: filled dark block. */
+    .bc-btn--solid {
+        @apply bg-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-white hover:bg-stone-700;
+    }
+
+    /* Outline: border that fills instantly on hover. */
+    .bc-btn--outline {
+        @apply border border-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-stone-900 hover:bg-stone-900 hover:text-white;
+    }
+
+    /* Minimal: editorial uppercase text link. */
+    .bc-btn--minimal {
+        @apply px-1 py-1 text-[11px] font-light uppercase tracking-[0.25em] text-stone-500 hover:text-stone-900;
+    }
+
+    /* Pill: rounded button using the design-system primary color. */
+    .bc-btn--pill {
+        @apply rounded-full bg-primary-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-700;
+    }
+
+    /* Editorial primary nav: hyper-tracked uppercase links with an animated underline. */
+    .site-nav > ul {
+        @apply flex items-center gap-10;
+    }
+
+    .site-nav a {
+        position: relative;
+        display: inline-block;
+        padding: 0.25rem 0;
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #78716c;
+        transition: color 0.3s ease;
+    }
+
+    .site-nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 1px;
+        width: 0;
+        background: #1c1917;
+        transition: width 0.3s ease;
+    }
+
+    .site-nav a:hover,
+    .site-nav .current-menu-item > a,
+    .site-nav .current_page_item > a {
+        color: #1c1917;
+    }
+
+    .site-nav a:hover::after,
+    .site-nav .current-menu-item > a::after,
+    .site-nav .current_page_item > a::after {
+        width: 100%;
+    }
+
+    /* Stacked variant for the mobile menu panel. */
+    .site-nav-mobile ul {
+        @apply flex flex-col gap-4;
+    }
+
+    .site-nav-mobile a {
+        display: block;
+        padding: 0.25rem 0;
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #57534e;
+        transition: color 0.2s ease;
+    }
+
+    .site-nav-mobile a:hover,
+    .site-nav-mobile .current-menu-item > a,
+    .site-nav-mobile .current_page_item > a {
+        color: #1c1917;
+    }
+
+    /* Header: solid background at top, frosted glass on scroll. */
+    .site-header {
+        background-color: var(--header-bg, #ffffff);
+        transition: background-color 0.3s ease, backdrop-filter 0.3s ease,
+            box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .site-header.is-scrolled {
+        background-color: color-mix(in srgb, var(--header-bg, #ffffff) 72%, transparent);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-color: transparent;
+        box-shadow: 0 1px 0 0 rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.18);
+    }
+}
+
+/* Footer — editorial styling that matches the header, with a light/dark text scheme.
+   Plain CSS (outside @layer) so the dynamic footer-scheme-* classes are never purged. */
+.footer-scheme-light {
+    color: #57534e;
+}
+
+.footer-scheme-dark {
+    color: #a8a29e;
+}
+
+.footer-brand {
+    color: #1c1917;
+    transition: color 0.3s ease;
+}
+
+.footer-scheme-dark .footer-brand {
+    color: #ffffff;
+}
+
+.footer-brand:hover {
+    opacity: 0.85;
+}
+
+.footer-tagline {
+    opacity: 0.7;
+}
+
+.footer-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav a {
+    position: relative;
+    display: inline-block;
+    padding: 0.25rem 0;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.75;
+    transition: opacity 0.3s ease;
+}
+
+.footer-nav a:hover,
+.footer-nav .current-menu-item > a,
+.footer-nav .current_page_item > a {
+    opacity: 1;
+}
+
+.footer-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-socials a {
+    display: inline-flex;
+    font-size: 1.125rem;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.footer-divider {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.footer-scheme-dark .footer-divider {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Comments — editorial styling (targets WordPress-generated markup, so kept outside @layer). */
+.comment-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.comment-list ol.children {
+    margin: 1.5rem 0 0;
+    padding-left: 1.5rem;
+    list-style: none;
+    border-left: 1px solid #f5f5f4;
+}
+
+.comment-body {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #f5f5f4;
+}
+
+.comment-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.comment-author .avatar {
+    border-radius: 9999px;
+}
+
+.comment-author .fn {
+    font-family: var(--font-heading, Georgia, serif);
+    font-style: normal;
+    font-weight: 600;
+    color: #1c1917;
+}
+
+.comment-author .says {
+    display: none;
+}
+
+.comment-metadata,
+.comment-metadata a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a8a29e;
+    text-decoration: none;
+}
+
+.comment-content {
+    color: #44403c;
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+.comment-content p {
+    margin: 0 0 0.75rem;
+}
+
+.reply {
+    margin-top: 0.5rem;
+}
+
+.comment-reply-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary-600, #2563eb);
+    text-decoration: none;
+}
+
+.comment-reply-link:hover {
+    color: var(--color-primary-700, #1d4ed8);
+}
+
+/* Comment submit button — matches the solid editorial button. */
+.comment-form .comment-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    border: 0;
+    cursor: pointer;
+    background: #1c1917;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+}
+
+.comment-form .comment-submit:hover {
+    background: #44403c;
+}

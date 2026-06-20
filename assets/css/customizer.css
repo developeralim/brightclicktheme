@@ -1,0 +1,45 @@
+.bc-button-row {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.bc-button-row > * {
+    margin-bottom: 6px;
+}
+
+.bc-button-row .bc-row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bc-button-row .bc-row-head strong {
+    font-size: 12px;
+    color: #50575e;
+}
+
+.bc-button-row label.bc-field-newtab-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.bc-button-row label.bc-field-style-label {
+    display: block;
+    font-size: 12px;
+    color: #50575e;
+}
+
+.bc-add-button {
+    margin-top: 4px;
+}
+
+.bc-remove {
+    color: #b32d2e;
+    cursor: pointer;
+    text-decoration: none;
+}

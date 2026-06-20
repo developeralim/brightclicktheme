@@ -1,0 +1,20 @@
+/*
+Theme Name: BrightClick
+Theme URI: https://hersuitespot.com/
+Author: HerSuiteSpot
+Author URI: https://hersuitespot.com/
+Description: A modern WordPress starter theme built with Tailwind CSS and Vite, featuring a Customizer-driven design system (colors, typography, layout).
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: brightclick
+Tags: custom-colors, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, block-styles, wide-blocks
+*/
+
+/*
+ * All visual styling is compiled by Tailwind via Vite into dist/css/.
+ * This file only carries the required WordPress theme header.
+ */

@@ -9,7 +9,7 @@ if ($footer_tagline === '') {
     $footer_tagline = get_bloginfo('description', 'display');
 }
 ?>
-<footer class="site-footer footer-scheme-<?php echo esc_attr($footer_scheme); ?> mt-wp-lg"
+<footer class="site-footer footer-scheme-<?php echo esc_attr($footer_scheme); ?>"
     style="background-color: <?php echo esc_attr($footer_bg); ?>;">
     <div class="site-container py-wp-lg">
 

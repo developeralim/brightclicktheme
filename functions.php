@@ -45,42 +45,49 @@ add_action('after_setup_theme', function () {
 });
 
 
-add_action('wp_head', function () {
-    $primary_500 = get_theme_mod('primary_500', '#3b82f6');
-
-    $font_heading = get_theme_mod('font_heading', 'Inter');
-    $font_body = get_theme_mod('font_body', 'Roboto');
-    $font_mono = get_theme_mod('font_mono', 'Fira Code');
-
+/**
+ * Google Font family names selected in the Customizer (web-safe fonts excluded).
+ *
+ * @return string[]
+ */
+function brightclick_google_font_families(): array
+{
     $web_safe_fonts = ['system-ui', 'Georgia', 'Times New Roman', 'Arial', 'Helvetica', 'monospace'];
-    $google_fonts = [];
 
-    if (!in_array($font_heading, $web_safe_fonts) && !empty($font_heading)) {
-        $google_fonts[] = $font_heading;
-    }
-    if (!in_array($font_body, $web_safe_fonts) && !empty($font_body)) {
-        $google_fonts[] = $font_body;
-    }
-    if (!in_array($font_mono, $web_safe_fonts) && !empty($font_mono)) {
-        $google_fonts[] = $font_mono;
+    $fonts = [];
+    foreach ([
+        'font_heading' => 'Inter',
+        'font_body'    => 'Roboto',
+        'font_mono'    => 'Fira Code',
+    ] as $mod => $default) {
+        $font = get_theme_mod($mod, $default);
+        if (!empty($font) && !in_array($font, $web_safe_fonts, true)) {
+            $fonts[] = $font;
+        }
     }
 
-    if (!empty($google_fonts)) {
-        $unique_fonts = array_unique($google_fonts);
-        $font_family_string = implode('|', $unique_fonts);
-        ?>
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=<?php echo esc_attr($font_family_string); ?>:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <?php
-    }
+    return array_values(array_unique($fonts));
+}
+
+/**
+ * The Design System :root{} custom properties built from the Customizer.
+ *
+ * Shared by the frontend (wp_head) and the block editor canvas so blocks that
+ * read these tokens (via Tailwind) render identically in both places.
+ */
+function brightclick_design_tokens_css(): string
+{
+    $font_heading = get_theme_mod('font_heading', 'Inter');
+    $font_body    = get_theme_mod('font_body', 'Roboto');
+    $font_mono    = get_theme_mod('font_mono', 'Fira Code');
+
+    ob_start();
     ?>
-    <style>
         :root {
             /* COLORS */
             --color-primary-50: <?php echo esc_html(get_theme_mod('primary_50', '#eff6ff')); ?>;
             --color-primary-100: <?php echo esc_html(get_theme_mod('primary_100', '#dbeafe')); ?>;
-            --color-primary-500: <?php echo esc_html($primary_500); ?>;
+            --color-primary-500: <?php echo esc_html(get_theme_mod('primary_500', '#3b82f6')); ?>;
             --color-primary-600: <?php echo esc_html(get_theme_mod('primary_600', '#2563eb')); ?>;
             --color-primary-700: <?php echo esc_html(get_theme_mod('primary_700', '#1d4ed8')); ?>;
             --color-primary-900: <?php echo esc_html(get_theme_mod('primary_900', '#1e3a8a')); ?>;
@@ -103,8 +110,43 @@ add_action('wp_head', function () {
             --wp--style--global--wide-size: <?php echo esc_html(get_theme_mod('wide_width', '90rem')); ?>;
             --wp--style--global--site-size: <?php echo esc_html(get_theme_mod('site_width', '1440px')); ?>;
         }
-    </style>
+    <?php
+    return (string) ob_get_clean();
+}
+
+add_action('wp_head', function () {
+    $families = brightclick_google_font_families();
+
+    if (!empty($families)) {
+        $font_family_string = implode('|', $families);
+        ?>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=<?php echo esc_attr($font_family_string); ?>:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <?php
+    }
+    ?>
+    <style><?php echo brightclick_design_tokens_css(); ?></style>
 <?php
+});
+
+/**
+ * Inject the same Design System tokens (and webfonts) into the block editor
+ * canvas. Using block_editor_settings_all reaches the editor iframe, which a
+ * plain enqueue_block_editor_assets stylesheet does not.
+ */
+add_filter('block_editor_settings_all', function (array $settings): array {
+    $css = brightclick_design_tokens_css();
+
+    $families = brightclick_google_font_families();
+    if (!empty($families)) {
+        $font_family_string = implode('|', $families);
+        $css = "@import url('https://fonts.googleapis.com/css2?family={$font_family_string}:wght@100;200;300;400;500;600;700;800;900&display=swap');\n" . $css;
+    }
+
+    $settings['styles'][] = ['css' => $css];
+
+    return $settings;
 });
 
 require_once THEME_DIR . '/customizer/settings.customizer.php';

@@ -83,4 +83,4 @@ $nav_args = [
         </div>
     </header>
 
-    <main id="primary" class="site-main site-container py-wp-md">
+    <main id="primary" class="site-main">

@@ -1,5 +1,6 @@
 <?php get_header(); ?>
 
+<div class="site-container py-wp-lg">
 <section class="error-404 not-found prose mx-auto max-w-content text-center">
     <p class="text-6xl font-heading font-bold text-primary-600">404</p>
     <h1 class="font-heading"><?php esc_html_e('This page could not be found', 'brightclick'); ?></h1>
@@ -12,5 +13,6 @@
         </a>
     </div>
 </section>
+</div>
 
 <?php get_footer(); ?>

@@ -331,6 +331,101 @@
     background: #44403c;
 }
 
+/* Pagination — editorial numbered links shared by the posts and comments lists.
+   Targets WordPress-generated .page-numbers markup, so kept outside @layer. */
+.pagination .nav-links,
+.comments-pagination .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.pagination .page-numbers,
+.comments-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    border: 1px solid #e7e5e4;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #57534e;
+    text-decoration: none;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.pagination a.page-numbers:hover,
+.comments-pagination a.page-numbers:hover {
+    border-color: #1c1917;
+    color: #1c1917;
+}
+
+.pagination .page-numbers.current,
+.comments-pagination .page-numbers.current {
+    background: #1c1917;
+    border-color: #1c1917;
+    color: #ffffff;
+}
+
+.pagination .page-numbers.dots,
+.comments-pagination .page-numbers.dots {
+    border-color: transparent;
+}
+
+/* Single-post navigation — previous / next links beneath the article. */
+.post-navigation .nav-links {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .post-navigation .nav-links {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.post-navigation .nav-next {
+    text-align: right;
+}
+
+.post-navigation .nav-links a {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.post-navigation .post-nav__label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-primary-600, #2563eb);
+}
+
+.post-navigation .post-nav__title {
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: 1.125rem;
+    line-height: 1.4;
+    color: #1c1917;
+    transition: color 0.3s ease;
+}
+
+.post-navigation .nav-links a:hover .post-nav__title {
+    color: var(--color-primary-700, #1d4ed8);
+}
+
+/* Single-post featured image keeps a comfortable aspect on large screens. */
+.single-featured img {
+    max-height: 32rem;
+}
+
 /* Block alignment — let full/wide blocks (e.g. the brightclick/hero block) break
    out of the max-w-content article wrapper. This is a classic theme (no theme.json
    layout), so the align* breakout has to be provided here. Plain CSS so the

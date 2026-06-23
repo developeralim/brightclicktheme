@@ -342,6 +342,45 @@ add_action('widgets_init', function (): void {
  */
 add_filter('excerpt_more', fn(): string => '&hellip;');
 
+/**
+ * Estimate the reading time of a post in whole minutes (min. 1).
+ */
+function brightclick_reading_time(?int $post_id = null): int
+{
+    $content = get_post_field('post_content', $post_id ?: get_the_ID());
+    $words   = str_word_count(wp_strip_all_tags((string) $content));
+
+    return max(1, (int) ceil($words / 200));
+}
+
+/**
+ * Output the editorial meta line for a single post: date, author, reading time.
+ */
+function brightclick_entry_meta(): void
+{
+    $items = [];
+
+    $items[] = sprintf(
+        '<time datetime="%s">%s</time>',
+        esc_attr(get_the_date('c')),
+        esc_html(get_the_date())
+    );
+
+    $items[] = sprintf(
+        /* translators: %s: post author name. */
+        esc_html__('By %s', 'brightclick'),
+        esc_html(get_the_author())
+    );
+
+    $items[] = sprintf(
+        /* translators: %d: estimated reading time in minutes. */
+        esc_html(_n('%d min read', '%d min read', brightclick_reading_time(), 'brightclick')),
+        brightclick_reading_time()
+    );
+
+    echo '<span class="entry-meta-sep">' . implode('</span><span aria-hidden="true" class="entry-meta-dot">&middot;</span><span class="entry-meta-sep">', $items) . '</span>';
+}
+
 
 add_action('customize_controls_enqueue_scripts', function (): void {
     wp_enqueue_style(

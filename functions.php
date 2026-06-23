@@ -56,8 +56,8 @@ function brightclick_google_font_families(): array
 
     $fonts = [];
     foreach ([
-        'font_heading' => 'Inter',
-        'font_body'    => 'Roboto',
+        'font_heading' => 'Bebas Neue',
+        'font_body'    => 'Jost',
         'font_mono'    => 'Fira Code',
     ] as $mod => $default) {
         $font = get_theme_mod($mod, $default);
@@ -70,6 +70,33 @@ function brightclick_google_font_families(): array
 }
 
 /**
+ * Build a valid Google Fonts css2 stylesheet URL for the active families.
+ *
+ * The css2 endpoint requires one `family=` parameter per font (joined with
+ * `&`), not the legacy pipe-separated list. A single shared weight range is
+ * requested per family; Google clamps it to the weights each font actually
+ * ships (e.g. Bebas Neue → 400), so display faces load without a 400 error.
+ */
+function brightclick_google_fonts_url(): string
+{
+    $families = brightclick_google_font_families();
+
+    if (empty($families)) {
+        return '';
+    }
+
+    $weights = 'wght@100;200;300;400;500;600;700;800;900';
+
+    $params = array_map(
+        static fn (string $family): string =>
+            'family=' . str_replace('%20', '+', rawurlencode($family)) . ':' . $weights,
+        $families
+    );
+
+    return 'https://fonts.googleapis.com/css2?' . implode('&', $params) . '&display=swap';
+}
+
+/**
  * The Design System :root{} custom properties built from the Customizer.
  *
  * Shared by the frontend (wp_head) and the block editor canvas so blocks that
@@ -77,8 +104,8 @@ function brightclick_google_font_families(): array
  */
 function brightclick_design_tokens_css(): string
 {
-    $font_heading = get_theme_mod('font_heading', 'Inter');
-    $font_body    = get_theme_mod('font_body', 'Roboto');
+    $font_heading = get_theme_mod('font_heading', 'Bebas Neue');
+    $font_body    = get_theme_mod('font_body', 'Jost');
     $font_mono    = get_theme_mod('font_mono', 'Fira Code');
 
     ob_start();
@@ -115,14 +142,13 @@ function brightclick_design_tokens_css(): string
 }
 
 add_action('wp_head', function () {
-    $families = brightclick_google_font_families();
+    $fonts_url = brightclick_google_fonts_url();
 
-    if (!empty($families)) {
-        $font_family_string = implode('|', $families);
+    if (!empty($fonts_url)) {
         ?>
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=<?php echo esc_attr($font_family_string); ?>:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+            <link href="<?php echo esc_url($fonts_url); ?>" rel="stylesheet">
         <?php
     }
     ?>
@@ -138,10 +164,9 @@ add_action('wp_head', function () {
 add_filter('block_editor_settings_all', function (array $settings): array {
     $css = brightclick_design_tokens_css();
 
-    $families = brightclick_google_font_families();
-    if (!empty($families)) {
-        $font_family_string = implode('|', $families);
-        $css = "@import url('https://fonts.googleapis.com/css2?family={$font_family_string}:wght@100;200;300;400;500;600;700;800;900&display=swap');\n" . $css;
+    $fonts_url = brightclick_google_fonts_url();
+    if (!empty($fonts_url)) {
+        $css = "@import url('{$fonts_url}');\n" . $css;
     }
 
     $settings['styles'][] = ['css' => $css];

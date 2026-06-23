@@ -124,6 +124,9 @@ add_action('customize_register', function ($wp_customize) {
         'Merriweather' => 'Merriweather',
         'Source Sans Pro' => 'Source Sans Pro',
         'Oswald' => 'Oswald',
+        'Bebas Neue' => 'Bebas Neue',
+        'Jost' => 'Jost',
+        'Cormorant Garamond' => 'Cormorant Garamond',
         'Roboto Condensed' => 'Roboto Condensed',
         'Noto Sans' => 'Noto Sans',
         'DM Sans' => 'DM Sans',
@@ -139,7 +142,7 @@ add_action('customize_register', function ($wp_customize) {
     ];
 
     $wp_customize->add_setting('font_heading', [
-        'default'           => 'Inter',
+        'default'           => 'Bebas Neue',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ]);
@@ -153,7 +156,7 @@ add_action('customize_register', function ($wp_customize) {
     ]);
 
     $wp_customize->add_setting('font_body', [
-        'default'           => 'Roboto',
+        'default'           => 'Jost',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ]);

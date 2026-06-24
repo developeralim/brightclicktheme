@@ -16,8 +16,17 @@ add_action('customize_register', function ($wp_customize) {
     $colors = ['50', '100', '500', '600', '700', '900'];
 
     foreach ($colors as $shade) {
+        $defaults = [
+            '50'  => '#fdf7e8',
+            '100' => '#f2e2b2',
+            '500' => '#c99140',
+            '600' => '#b07828',
+            '700' => '#8f6118',
+            '900' => '#3d2a0a',
+        ];
+
         $wp_customize->add_setting("primary_$shade", [
-            'default'           => $shade == '500' ? '#3b82f6' : '',
+            'default'           => $defaults[$shade] ?? '',
             'transport'         => 'refresh',
             'sanitize_callback' => 'sanitize_hex_color',
         ]);
@@ -36,7 +45,7 @@ add_action('customize_register', function ($wp_customize) {
     }
 
     $wp_customize->add_setting('accent_color', [
-        'default'           => '#f59e0b',
+        'default'           => '#d4a843',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
     ]);
@@ -53,7 +62,7 @@ add_action('customize_register', function ($wp_customize) {
     );
 
     $wp_customize->add_setting('surface_color', [
-        'default'           => '#ffffff',
+        'default'           => '#fffdf8',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
     ]);
@@ -70,7 +79,7 @@ add_action('customize_register', function ($wp_customize) {
     );
 
     $wp_customize->add_setting('muted_color', [
-        'default'           => '#f3f4f6',
+        'default'           => '#f5eedb',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
     ]);
@@ -87,7 +96,7 @@ add_action('customize_register', function ($wp_customize) {
     );
 
     $wp_customize->add_setting('body_background_color', [
-        'default'           => '#fbfbfb',
+        'default'           => '#fdf8f0',
         'transport'         => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
     ]);

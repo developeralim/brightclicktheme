@@ -112,20 +112,20 @@ function brightclick_design_tokens_css(): string
     ?>
         :root {
             /* COLORS */
-            --color-primary-50: <?php echo esc_html(get_theme_mod('primary_50', '#eff6ff')); ?>;
-            --color-primary-100: <?php echo esc_html(get_theme_mod('primary_100', '#dbeafe')); ?>;
-            --color-primary-500: <?php echo esc_html(get_theme_mod('primary_500', '#3b82f6')); ?>;
-            --color-primary-600: <?php echo esc_html(get_theme_mod('primary_600', '#2563eb')); ?>;
-            --color-primary-700: <?php echo esc_html(get_theme_mod('primary_700', '#1d4ed8')); ?>;
-            --color-primary-900: <?php echo esc_html(get_theme_mod('primary_900', '#1e3a8a')); ?>;
+            --color-primary-50: <?php echo esc_html(get_theme_mod('primary_50', '#fdf7e8')); ?>;
+            --color-primary-100: <?php echo esc_html(get_theme_mod('primary_100', '#f2e2b2')); ?>;
+            --color-primary-500: <?php echo esc_html(get_theme_mod('primary_500', '#c99140')); ?>;
+            --color-primary-600: <?php echo esc_html(get_theme_mod('primary_600', '#b07828')); ?>;
+            --color-primary-700: <?php echo esc_html(get_theme_mod('primary_700', '#8f6118')); ?>;
+            --color-primary-900: <?php echo esc_html(get_theme_mod('primary_900', '#3d2a0a')); ?>;
 
-            --color-accent: <?php echo esc_html(get_theme_mod('accent_color', '#f59e0b')); ?>;
-            --color-surface: <?php echo esc_html(get_theme_mod('surface_color', '#ffffff')); ?>;
-            --color-muted: <?php echo esc_html(get_theme_mod('muted_color', '#f3f4f6')); ?>;
-            --color-body-bg: <?php echo esc_html(get_theme_mod('body_background_color', '#fbfbfb')); ?>;
+            --color-accent: <?php echo esc_html(get_theme_mod('accent_color', '#d4a843')); ?>;
+            --color-surface: <?php echo esc_html(get_theme_mod('surface_color', '#fffdf8')); ?>;
+            --color-muted: <?php echo esc_html(get_theme_mod('muted_color', '#f5eedb')); ?>;
+            --color-body-bg: <?php echo esc_html(get_theme_mod('body_background_color', '#fdf8f0')); ?>;
 
             /* HEADER */
-            --header-bg: <?php echo esc_html(get_theme_mod('header_bg_color', '#ffffff')); ?>;
+            --header-bg: <?php echo esc_html(get_theme_mod('header_bg_color', '#fffdf8')); ?>;
 
             /* TYPOGRAPHY */
             --font-heading: <?php echo esc_html($font_heading); ?>;

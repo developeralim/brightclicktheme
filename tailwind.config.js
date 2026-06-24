@@ -26,17 +26,17 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    50: "var(--color-primary-50,  #eff6ff)",
-                    100: "var(--color-primary-100, #dbeafe)",
-                    500: "var(--color-primary-500, #3b82f6)",
-                    600: "var(--color-primary-600, #2563eb)",
-                    700: "var(--color-primary-700, #1d4ed8)",
-                    900: "var(--color-primary-900, #1e3a8a)",
+                    50:  "var(--color-primary-50,  #fdf7e8)",
+                    100: "var(--color-primary-100, #f2e2b2)",
+                    500: "var(--color-primary-500, #c99140)",
+                    600: "var(--color-primary-600, #b07828)",
+                    700: "var(--color-primary-700, #8f6118)",
+                    900: "var(--color-primary-900, #3d2a0a)",
                 },
-                accent: "var(--color-accent, #f59e0b)",
-                surface: "var(--color-surface, #ffffff)",
-                muted: "var(--color-muted, #f3f4f6)",
-                body: "var(--color-body-bg, #f9fafb)",
+                accent:  "var(--color-accent,   #d4a843)",
+                surface: "var(--color-surface,  #fffdf8)",
+                muted:   "var(--color-muted,    #f5eedb)",
+                body:    "var(--color-body-bg,  #fdf8f0)",
             },
 
             fontFamily: {

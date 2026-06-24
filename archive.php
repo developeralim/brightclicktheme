@@ -4,34 +4,65 @@
 
     <?php if (have_posts()) : ?>
 
-        <header class="page-header mb-wp-lg text-center">
-            <span class="block text-[11px] font-light uppercase tracking-[0.3em] text-primary-600">
-                <?php
-                if (is_category()) {
-                    esc_html_e('Category', 'brightclick');
-                } elseif (is_tag()) {
-                    esc_html_e('Tag', 'brightclick');
-                } elseif (is_author()) {
-                    esc_html_e('Author', 'brightclick');
-                } elseif (is_date()) {
-                    esc_html_e('Archive', 'brightclick');
-                } else {
-                    esc_html_e('Journal', 'brightclick');
-                }
-                ?>
-            </span>
-            <?php the_archive_title('<h1 class="mt-3 font-serif text-4xl font-normal tracking-tight text-stone-900 sm:text-5xl">', '</h1>'); ?>
-            <?php the_archive_description('<div class="archive-description prose prose-stone mx-auto mt-4 max-w-content text-stone-600">', '</div>'); ?>
-        </header>
+        <?php
+        // Category filter — shown on category archives and general archives (not author/date/tag).
+        if (! is_author() && ! is_date() && ! is_tag()) :
+            $filter_cats = get_categories(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 8]);
+            if (! empty($filter_cats)) :
+                $blog_url = get_permalink(get_option('page_for_posts')) ?: home_url('/');
+        ?>
+            <nav class="category-filter mb-wp-md flex flex-wrap items-center justify-center gap-2"
+                 aria-label="<?php esc_attr_e('Filter by category', 'brightclick'); ?>">
 
-        <div class="post-list grid gap-wp-md sm:grid-cols-2 lg:grid-cols-3">
+                <a href="<?php echo esc_url($blog_url); ?>"
+                   class="category-filter__item <?php echo (! is_category()) ? 'is-active' : ''; ?>">
+                    <?php esc_html_e('All', 'brightclick'); ?>
+                </a>
+
+                <?php foreach ($filter_cats as $cat) : ?>
+                    <a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"
+                       class="category-filter__item <?php echo is_category($cat->term_id) ? 'is-active' : ''; ?>">
+                        <?php echo esc_html($cat->name); ?>
+                    </a>
+                <?php endforeach; ?>
+
+            </nav>
+        <?php
+            endif;
+        endif;
+
+        // Collect all posts so we can split the hero from the grid.
+        $posts_collected = [];
+        while (have_posts()) :
+            the_post();
+            $posts_collected[] = get_post();
+        endwhile;
+
+        $hero_post  = (! is_paged() && ! empty($posts_collected)) ? $posts_collected[0] : null;
+        $grid_posts = $hero_post ? array_slice($posts_collected, 1) : $posts_collected;
+        ?>
+
+        <?php if ($hero_post) : ?>
             <?php
-            while (have_posts()) :
-                the_post();
-                get_template_part('template-parts/content', get_post_type());
-            endwhile;
+            global $post;
+            $post = $hero_post;
+            setup_postdata($post);
             ?>
-        </div>
+            <?php get_template_part('template-parts/content', 'featured'); ?>
+            <?php wp_reset_postdata(); ?>
+        <?php endif; ?>
+
+        <?php if (! empty($grid_posts)) : ?>
+            <div class="post-list grid gap-wp-md sm:grid-cols-2 lg:grid-cols-3">
+                <?php
+                foreach ($grid_posts as $post) :
+                    setup_postdata($post);
+                    get_template_part('template-parts/content', get_post_type());
+                endforeach;
+                wp_reset_postdata();
+                ?>
+            </div>
+        <?php endif; ?>
 
         <?php
         the_posts_pagination([

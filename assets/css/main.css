@@ -6,6 +6,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
+    a {
+        @apply text-primary-900;
+    }
     /* Shared site container: constrains header, footer and content to the global site size. */
     .site-container {
         @apply mx-auto w-full max-w-site px-wp-sm;
@@ -22,14 +25,14 @@
 
     /* Premium: structural outline that fills from the left on hover. */
     .bc-btn--premium {
-        @apply overflow-hidden border border-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-stone-900;
+        @apply overflow-hidden border border-primary-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-primary-900;
     }
 
     .bc-btn--premium::before {
+        @apply bg-primary-900;
         content: "";
         position: absolute;
         inset: 0;
-        background: #1c1917;
         transform: translateX(-100%);
         transition: transform 0.5s ease;
     }
@@ -44,17 +47,17 @@
 
     /* Solid: filled dark block. */
     .bc-btn--solid {
-        @apply bg-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-white hover:bg-stone-700;
+        @apply bg-primary-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-white hover:bg-primary-600;
     }
 
     /* Outline: border that fills instantly on hover. */
     .bc-btn--outline {
-        @apply border border-stone-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-stone-900 hover:bg-stone-900 hover:text-white;
+        @apply border border-primary-900 px-7 py-3 text-[10px] font-medium uppercase tracking-[0.25em] text-primary-900 hover:bg-primary-900 hover:text-white;
     }
 
     /* Minimal: editorial uppercase text link. */
     .bc-btn--minimal {
-        @apply px-1 py-1 text-[11px] font-light uppercase tracking-[0.25em] text-stone-500 hover:text-stone-900;
+        @apply px-1 py-1 text-[11px] font-light uppercase tracking-[0.25em] text-primary-500 hover:text-primary-900;
     }
 
     /* Pill: rounded button using the design-system primary color. */
@@ -68,6 +71,7 @@
     }
 
     .site-nav a {
+        @apply text-primary-900;
         position: relative;
         display: inline-block;
         padding: 0.25rem 0;
@@ -75,25 +79,24 @@
         font-weight: 300;
         letter-spacing: 0.25em;
         text-transform: uppercase;
-        color: #78716c;
         transition: color 0.3s ease;
     }
 
     .site-nav a::after {
+        @apply bg-primary-900;
         content: "";
         position: absolute;
         left: 0;
         bottom: 0;
         height: 1px;
         width: 0;
-        background: #1c1917;
         transition: width 0.3s ease;
     }
 
     .site-nav a:hover,
     .site-nav .current-menu-item > a,
     .site-nav .current_page_item > a {
-        color: #1c1917;
+        @apply text-primary-600;
     }
 
     .site-nav a:hover::after,
@@ -108,20 +111,20 @@
     }
 
     .site-nav-mobile a {
+        @apply text-primary-900;
         display: block;
         padding: 0.25rem 0;
         font-size: 12px;
         font-weight: 300;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: #57534e;
         transition: color 0.2s ease;
     }
 
     .site-nav-mobile a:hover,
     .site-nav-mobile .current-menu-item > a,
     .site-nav-mobile .current_page_item > a {
-        color: #1c1917;
+        @apply text-primary-600;
     }
 
     /* Header: solid background at top, frosted glass on scroll. */
@@ -151,7 +154,7 @@
 }
 
 .footer-brand {
-    color: #1c1917;
+    @apply text-primary-900;
     transition: color 0.3s ease;
 }
 
@@ -207,9 +210,9 @@
 }
 
 .footer-socials a {
+    @apply text-primary-900;
     display: inline-flex;
     font-size: 1.125rem;
-    color: inherit;
     opacity: 0.7;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -220,11 +223,14 @@
 }
 
 .footer-divider {
-    border-color: rgba(0, 0, 0, 0.08);
+    @apply border-primary-100;
 }
 
 .footer-scheme-dark .footer-divider {
     border-color: rgba(255, 255, 255, 0.12);
+}
+.footer-copyright,.footer-top{
+    @apply text-primary-900;
 }
 
 /* Comments — editorial styling (targets WordPress-generated markup, so kept outside @layer). */

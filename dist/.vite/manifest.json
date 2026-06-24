@@ -1,20 +1,20 @@
 {
   "assets/js/editor.js": {
-    "file": "js/editor-Be5_TQdW.js",
+    "file": "js/editor-JUi38k3a.js",
     "name": "editor",
     "src": "assets/js/editor.js",
     "isEntry": true,
     "css": [
-      "css/editor-BmHC7osT.css"
+      "css/editor-CKXMdHNw.css"
     ]
   },
   "assets/js/main.js": {
-    "file": "js/main-CmYA2AfZ.js",
+    "file": "js/main-CCNpCDsE.js",
     "name": "main",
     "src": "assets/js/main.js",
     "isEntry": true,
     "css": [
-      "css/main-D_DVj8Xc.css"
+      "css/main-BRUfApNg.css"
     ]
   }
 }

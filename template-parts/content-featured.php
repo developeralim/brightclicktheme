@@ -1,10 +1,10 @@
 <?php
-/**
- * Template part for displaying the featured/hero post at the top of archive pages.
- */
+    /**
+     * Template part for displaying the featured/hero post at the top of archive pages.
+     */
 
-$cats         = get_the_category();
-$reading_time = brightclick_reading_time();
+    $cats         = get_the_category();
+    $reading_time = brightclick_reading_time();
 ?>
 <div class="hero-post group mb-wp-md">
 
